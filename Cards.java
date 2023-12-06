@@ -19,7 +19,44 @@ public class Cards{
 			deck[randomindex] = temp;
 		}
 	}
-	public void showNumber(Cards[] deck) {
-		return;
+	public void deal(Cards[] deck, Cards[] computerDeck, Cards[] playerDeck) {
+		int decklength = deck.length-1;
+		int counter = 0;
+		for(int i = 0; i < 5; i++) {
+			computerDeck[i] = deck[counter];
+			playerDeck[i] = deck[decklength];
+			counter++;
+			decklength--;
+		}
+	}
+	public void dealsigned(Cards[] sdcoloured, Cards[] signeddeck, Cards[] computerDeck, Cards[] playerDeck) {
+		Random r = new Random(System.currentTimeMillis());
+		int x;
+		int y;
+		int z;
+		int sdlength = sdcoloured.length;
+		int signedlength = signeddeck.length;
+		
+		for(int i = 5; i < 10; i++) {
+			x = r.nextInt(10);
+			y = r.nextInt(sdlength);
+			z = r.nextInt(signedlength);
+			if(x < 8) {
+				computerDeck[i] = sdcoloured[y];
+			}else {
+				computerDeck[i] = signeddeck[z];
+			}
+		}
+		for(int i = 5; i < 10; i++) {
+			x = r.nextInt(10);
+			y = r.nextInt(sdlength);
+			z = r.nextInt(signedlength);
+			if(x < 8) {
+				playerDeck[i] = sdcoloured[y];
+			}else {
+				playerDeck[i] = signeddeck[z];
+			}
+		}
+		
 	}
 }
