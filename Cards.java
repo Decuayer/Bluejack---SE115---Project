@@ -29,7 +29,7 @@ public class Cards{
 			decklength--;
 		}
 	}
-	public void dealsigned(Cards[] sdcoloured, Cards[] signeddeck, Cards[] computerDeck, Cards[] playerDeck) {
+	public void dealSigned(Cards[] sdcoloured, Cards[] signeddeck, Cards[] computerDeck, Cards[] playerDeck) {
 		Random r = new Random(System.currentTimeMillis());
 		int x;
 		int y;
@@ -37,7 +37,12 @@ public class Cards{
 		int sdlength = sdcoloured.length;
 		int signedlength = signeddeck.length;
 		
-		for(int i = 5; i < 10; i++) {
+		for(int i = 5; i < 8; i++) {
+			y = r.nextInt(sdlength);
+			z = r.nextInt(signedlength);
+			computerDeck[i] = sdcoloured[y];
+		}
+		for(int i = 8; i < 10; i++) {
 			x = r.nextInt(10);
 			y = r.nextInt(sdlength);
 			z = r.nextInt(signedlength);
@@ -46,8 +51,14 @@ public class Cards{
 			}else {
 				computerDeck[i] = signeddeck[z];
 			}
+		}	
+		for(int i = 5; i < 8; i++) {
+			y = r.nextInt(sdlength);
+			z = r.nextInt(signedlength);
+			playerDeck[i] = sdcoloured[y];
+			
 		}
-		for(int i = 5; i < 10; i++) {
+		for(int i = 8; i < 10; i++) {
 			x = r.nextInt(10);
 			y = r.nextInt(sdlength);
 			z = r.nextInt(signedlength);
@@ -55,8 +66,38 @@ public class Cards{
 				playerDeck[i] = sdcoloured[y];
 			}else {
 				playerDeck[i] = signeddeck[z];
-			}
+			}	
 		}
 		
+	}
+	public void dealHand(Cards[] computerDeck, Cards[] computerHand, Cards[] playerDeck, Cards[] playerHand) {
+		Random r = new Random(System.currentTimeMillis());
+		int x = r.nextInt(5,10);
+		int y = r.nextInt(5,10);
+		int c = 0;
+		for(int i = 5; i<10; i++) {
+			if (i == x) {
+				continue;
+			}
+			computerHand[c] = computerDeck[i];
+			c++;
+		}
+		c = 0;
+		for(int i = 5; i< 10; i++) {
+			if(i == y) {
+				continue;
+			}
+			playerHand[c] = playerDeck[i];
+			c++;
+		}
+	}
+	public void dealTable(Cards[] computerDeck, Cards[] computerTable, Cards[] playerDeck, Cards[] playerTable) {
+		for(int i = 0; i <5; i++) {
+			computerTable[i] = computerDeck[i];
+			playerTable[i] = playerDeck[i];
+		}
+	}
+	public void addCardTable(Cards[] deck, Cards[] Table,int position) {
+		Table[position] = deck[position];
 	}
 }
