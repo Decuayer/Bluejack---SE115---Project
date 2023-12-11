@@ -38,6 +38,7 @@ public class main {
 		Cards[] playerHand = new Cards[4];
 		Cards[] computerHand = new Cards[4];
 		String[] computerSide = {"X", "X", "X", "X"};
+		Cards[] newDeck = new Cards[30];
 		
 		int c = 0;
 		int d = 0;
@@ -90,38 +91,54 @@ public class main {
 		}
 		
 		Cards.shuffle(deck);
-		Cards.deal(deck,computerDeck,playerDeck);
+		Cards.deal(deck,computerDeck,playerDeck,newDeck);
 		Cards.dealSigned(sdcoloured,signeddeck,computerDeck,playerDeck);
 		Cards.dealHand(computerDeck,computerHand,playerDeck,playerHand);
 		
-		int gameRound = 0;
+		int gameRoundPlayer = 0;
+		int gameRoundCPU = 0;
+		int cardPosition = 0;
 		int gameMenu = -1;
+		int chooseSpecial = -1;
 		printGame(computerHand,computerTable,playerTable,playerHand);
 		System.out.println("The game begins...");
 		while(gameContinue) {
-			printGame(computerHand,computerTable,playerTable,playerHand);
-			while(true) {
-				Cards.addCardTable(playerDeck,playerTable,gameRound);
-				System.out.println("-1--> Continue the game.");
-				System.out.println("-2--> Stop game.");
-				System.out.println("-3--> Stop game and use special card.");
-				System.out.print("---Select one: ");
-				gameRound = sc.nextInt();
-				if(gameRound == 1) {
-					System.out.println("CPU pulling card...");
-				}else if(gameRound == 2) {
-					System.out.println("CPU pulling last card...");
-					gameContinue = false;
-				}else if(gameRound == 3) {
-					System.out.println("Special Card sorgusu");
-				}else {
-					System.out.println("You enter wrong number. Try again.");
-					continue;
+			Cards.addCardTable(newDeck,playerTable,gameRoundPlayer,cardPosition);
+			cardPosition++;
+			System.out.println("-1--> Continue the game.");
+			System.out.println("-2--> Stop game.");
+			System.out.println("-3--> Stop game and use special card.");
+			System.out.print("---Select one: ");
+			gameMenu = sc.nextInt();
+			if(gameMenu == 1) {
+				System.out.println("CPU pulling card...");
+			}else if(gameMenu == 2) {
+				System.out.println("CPU pulling last card...");
+				gameContinue = false;
+			}else if(gameMenu == 3) {
+				while(true) {
+					System.out.println("Kaçıncı sıradaki kartınızı oynamak istersiniz? (1,2,3,4)");
+					System.out.print("Sayıyı girin: ");
+					chooseSpecial = sc.nextInt();
+					if(chooseSpecial != 1 && chooseSpecial != 2 && chooseSpecial != 3 && chooseSpecial != 4) {
+						continue;
+					}else {
+						break;
+					}
 				}
-				Cards.addCardTable(computerDeck,computerHand,gameRound);
+				Cards.addCardTable(playerHand,playerTable,gameRoundPlayer+1,chooseSpecial-1);
+				gameRoundPlayer+=1;
+				Cards.updateHand(playerHand,chooseSpecial-1);
+				gameContinue = false;
+			}else {
+				System.out.println("You enter wrong number. Try again.");
+				continue;
 			}
+			Cards.addCardTable(newDeck,computerTable,gameRoundCPU,cardPosition);
+			cardPosition++;
 			printGame(computerHand,computerTable,playerTable,playerHand);
-			gameContinue = false;
+			gameRoundPlayer += 1;
+			gameRoundCPU += 1;
 		}
 		
 	}

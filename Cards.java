@@ -19,7 +19,7 @@ public class Cards{
 			deck[randomindex] = temp;
 		}
 	}
-	public void deal(Cards[] deck, Cards[] computerDeck, Cards[] playerDeck) {
+	public void deal(Cards[] deck, Cards[] computerDeck, Cards[] playerDeck, Cards[] newDeck) {
 		int decklength = deck.length-1;
 		int counter = 0;
 		for(int i = 0; i < 5; i++) {
@@ -27,6 +27,11 @@ public class Cards{
 			playerDeck[i] = deck[decklength];
 			counter++;
 			decklength--;
+		}
+		counter = 0;
+		for(int i = 5; i<35; i++) {
+			newDeck[counter] = deck[i];
+			counter++;
 		}
 	}
 	public void dealSigned(Cards[] sdcoloured, Cards[] signeddeck, Cards[] computerDeck, Cards[] playerDeck) {
@@ -72,32 +77,54 @@ public class Cards{
 	}
 	public void dealHand(Cards[] computerDeck, Cards[] computerHand, Cards[] playerDeck, Cards[] playerHand) {
 		Random r = new Random(System.currentTimeMillis());
-		int x = r.nextInt(5,10);
-		int y = r.nextInt(5,10);
+		int x = -1;
+		int y = -1;
+		int[] arr = {0,0,0,0};
+		boolean loopC = true;
 		int c = 0;
-		for(int i = 5; i<10; i++) {
-			if (i == x) {
+		while(true) {
+			loopC = true;
+			if(c == 4) {
+				break;
+			}
+			x = r.nextInt(10);
+			for(int i = 0; i<4; i++) {
+				if(arr[i] == x) {
+					loopC = false;
+				}
+			}
+			if(loopC = false) {
 				continue;
 			}
-			computerHand[c] = computerDeck[i];
+			arr[c] = x;
+			computerHand[c] = computerDeck[x];
 			c++;
 		}
+		int[] arr2 = {0,0,0,0};
 		c = 0;
-		for(int i = 5; i< 10; i++) {
-			if(i == y) {
+		while(true) {
+			loopC = true;
+			if(c == 4) {
+				break;
+			}
+			y = r.nextInt(10);
+			for(int i = 0; i<4; i++) {
+				if(arr2[i] == y) {
+					loopC = false;
+				}
+			}
+			if(loopC = false) {
 				continue;
 			}
-			playerHand[c] = playerDeck[i];
+			arr2[c] = y;
+			playerHand[c] = playerDeck[y];
 			c++;
 		}
 	}
-	public void dealTable(Cards[] computerDeck, Cards[] computerTable, Cards[] playerDeck, Cards[] playerTable) {
-		for(int i = 0; i <5; i++) {
-			computerTable[i] = computerDeck[i];
-			playerTable[i] = playerDeck[i];
-		}
+	public void addCardTable(Cards[] newDeck, Cards[] Table,int position, int cardPosition) {
+		Table[position] = newDeck[cardPosition];
 	}
-	public void addCardTable(Cards[] deck, Cards[] Table,int position) {
-		Table[position] = deck[position];
+	public void updateHand(Cards[] Hand, int position) {
+		Hand[position] = new Cards("0","0");
 	}
 }
