@@ -287,6 +287,24 @@ public class main {
 			}
 			printSpace(30);
 		}
-		Games.writeFile(playerName,whoWon,totalPointsPlayer,totalPointsCPU,totalRounds);
+		int svg = -1;
+		while(true) {
+			System.out.println("Save game?");
+			System.out.println("1-Yes");
+			System.out.println("2-No");
+			System.out.print("Choose: ");
+			svg = sc.nextInt();
+			if(svg == 1) {
+				System.out.println("Game saving...");
+				Games.writeFile(playerName,whoWon,totalPointsPlayer,totalPointsCPU,totalRounds);
+				break;
+			} else if (svg == 2) {
+				System.out.println("Game not saved.");
+				break;
+			} else {
+				System.out.println("You enter wrong output. Try again.");
+			}
+		}
+		
 	}
 }
