@@ -1,13 +1,28 @@
 import java.util.Random;
 public class Cards{
-	public String colour;
-	public String number;
+	private String colour;
+	private String number;
 	
 	public Cards(){};
-	public Cards(String number, String colour) {
-		this.colour = colour;
-		this.number = number;
+	public Cards(String x, String y) {
+		colour = y;
+		number = x;
 	}
+	
+	public void setNumber(String x) {
+		number = x;
+	}
+	public void setColour(String x) {
+		colour = x;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public String getColour() {
+		return colour;
+	}
+	
+	
 	
 	public void shuffle(Cards[] deck) {
 		Random r = new Random(System.currentTimeMillis());
@@ -126,5 +141,18 @@ public class Cards{
 	}
 	public void updateHand(Cards[] Hand, int position) {
 		Hand[position] = new Cards("0","0");
+	}
+	public int getTablePoint(Cards[] Table) {
+		int sum = 0;
+		for(int i = 0; i < Table.length; i++) {
+			if(Table[i].getNumber() == "+/-") {
+			 sum += -2*(Integer.parseInt(Table[i-1].getNumber()));
+			}else if(Table[i].getNumber() == "2x") {
+				sum += (Integer.parseInt(Table[i-1].getNumber()));
+			}else {
+				sum+=Integer.parseInt(Table[i].getNumber());
+			}
+		}
+		return sum;
 	}
 }

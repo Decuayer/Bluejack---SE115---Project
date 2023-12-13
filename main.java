@@ -2,8 +2,8 @@ import java.util.Scanner;
 public class main {
 	public static void printDeck(Cards[] deck) {
 		for(int i = 0; i < deck.length; i++) {
-			System.out.print("[ " + deck[i].number + " ");
-			System.out.print(deck[i].colour + " ]");
+			System.out.print("[ " + deck[i].getNumber() + " ");
+			System.out.print(deck[i].getColour() + " ]");
 		}
 		System.out.println();
 	}
@@ -20,6 +20,24 @@ public class main {
 		System.out.println("---------------------------------------------------------------------------------------------------------");
 		System.out.print("Player Hand    :  ");
 		printDeck(playerHand);
+		System.out.println("---------------------------------------------------------------------------------------------------------");
+	}
+	public static void printSpace(int x) {
+		for(int i = 0; i<x; i++) {
+			System.out.println();
+		}
+	}  
+	public static void menuDesign() {
+		System.out.println("---------------------------------------------------------------------------------------------------------");
+		System.out.println("------------------------------------------------BLUEJACK-------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------------------------------------");
+		System.out.println();
+		System.out.println();
+		System.out.println("					-1----- START GAME -");
+		System.out.println("					-2-----   OPTIONS  -");
+		System.out.println("					-3-----    EXIT    -");
+		System.out.println();
+		System.out.println();
 		System.out.println("---------------------------------------------------------------------------------------------------------");
 	}
 	public static void main(String[] args) {
@@ -40,9 +58,10 @@ public class main {
 		String[] computerSide = {"X", "X", "X", "X"};
 		Cards[] newDeck = new Cards[30];
 		
+		Games Games = new Games();
+		
 		int c = 0;
 		int d = 0;
-		boolean gameContinue = true;
 		
 		//..........................CREATING CARD DECKS................................................
 		for(int i = 0; i < deck.length; i++) {
@@ -89,57 +108,185 @@ public class main {
 		for(int i = 0; i < playerTable.length; i++) {
 			playerTable[i] = new Cards("0","0");
 		}
+		//..........................GAME STRACTURE ................................................
+
 		
+		int totalPointsCPU = 0;
+		int totalPointsPlayer = 0;
+		int totalRounds = 0;
+		int cardPosition = 0;
+		int mainMenu = -1;
+		int optionsMenu = -1;
+		String playerName = "";
+		String whoWon = "";
+		boolean totalGame = false;
 		Cards.shuffle(deck);
 		Cards.deal(deck,computerDeck,playerDeck,newDeck);
 		Cards.dealSigned(sdcoloured,signeddeck,computerDeck,playerDeck);
 		Cards.dealHand(computerDeck,computerHand,playerDeck,playerHand);
 		
-		int gameRoundPlayer = 0;
-		int gameRoundCPU = 0;
-		int cardPosition = 0;
-		int gameMenu = -1;
-		int chooseSpecial = -1;
-		printGame(computerHand,computerTable,playerTable,playerHand);
-		System.out.println("The game begins...");
-		while(gameContinue) {
-			Cards.addCardTable(newDeck,playerTable,gameRoundPlayer,cardPosition);
-			cardPosition++;
-			System.out.println("-1--> Continue the game.");
-			System.out.println("-2--> Stop game.");
-			System.out.println("-3--> Stop game and use special card.");
-			System.out.print("---Select one: ");
-			gameMenu = sc.nextInt();
-			if(gameMenu == 1) {
-				System.out.println("CPU pulling card...");
-			}else if(gameMenu == 2) {
-				System.out.println("CPU pulling last card...");
-				gameContinue = false;
-			}else if(gameMenu == 3) {
+		while(true) {
+			printSpace(30);
+			menuDesign();
+			System.out.print("Choose: ");
+			mainMenu = sc.nextInt();
+			if(mainMenu == 1) {
+				totalGame = true;
+				printSpace(30);
+				break;
+			}else if(mainMenu == 2) {
+				Games.readFile();
 				while(true) {
-					System.out.println("Kaçıncı sıradaki kartınızı oynamak istersiniz? (1,2,3,4)");
-					System.out.print("Sayıyı girin: ");
-					chooseSpecial = sc.nextInt();
-					if(chooseSpecial != 1 && chooseSpecial != 2 && chooseSpecial != 3 && chooseSpecial != 4) {
-						continue;
-					}else {
+					System.out.print("Press 1 to return: ");
+					optionsMenu = sc.nextInt();
+					if(optionsMenu == 1) {
 						break;
 					}
 				}
-				Cards.addCardTable(playerHand,playerTable,gameRoundPlayer+1,chooseSpecial-1);
-				gameRoundPlayer+=1;
-				Cards.updateHand(playerHand,chooseSpecial-1);
-				gameContinue = false;
-			}else {
-				System.out.println("You enter wrong number. Try again.");
+				printSpace(30);
 				continue;
+			}else if(mainMenu == 3) {
+				System.out.println("You are leaving the game...");
+				break;
+			}else {
+				System.out.println("Your output is wrong please try again.");
 			}
-			Cards.addCardTable(newDeck,computerTable,gameRoundCPU,cardPosition);
-			cardPosition++;
-			printGame(computerHand,computerTable,playerTable,playerHand);
-			gameRoundPlayer += 1;
-			gameRoundCPU += 1;
+		}
+		while(true) {
+			System.out.print("Enter your name: ");
+			playerName = sc.nextLine();
+			if (playerName != "") {
+				printSpace(30);
+				break;
+			}
 		}
 		
+		while(totalGame) {
+			
+			Cards.shuffle(newDeck);
+			for(int i = 0; i < computerTable.length; i++) {
+			computerTable[i] = new Cards("0","0");
+			}
+			for(int i = 0; i < playerTable.length; i++) {
+				playerTable[i] = new Cards("0","0");
+			}
+			
+			int gameRoundPlayer = 0;
+			int gameRoundCPU = 0;
+			int gameMenu = -1;
+			int chooseSpecial = -1;
+			boolean gameContinue = true;
+			
+			
+			printGame(computerHand,computerTable,playerTable,playerHand);
+			System.out.println("The game begins...");
+			while(gameContinue) {
+				if(cardPosition == 30) {
+					cardPosition = 0;
+					Cards.shuffle(newDeck);
+				}
+				System.out.println("-1--> Continue the game.");
+				System.out.println("-2--> Stop game.");
+				System.out.println("-3--> Stop game and use special card.");
+				System.out.print("---Select one: ");
+				gameMenu = sc.nextInt();
+				if(gameMenu == 1) {
+					if(Integer.parseInt(playerTable[8].getNumber()) != 0) {
+						System.out.println("You cannot draw any more cards.");
+						break;
+					}
+					Cards.addCardTable(newDeck,playerTable,gameRoundPlayer,cardPosition);
+					cardPosition++;
+					Cards.addCardTable(newDeck,computerTable,gameRoundCPU,cardPosition);
+					cardPosition++;
+					System.out.println("CPU pulling card...");
+				}else if(gameMenu == 2) {
+					System.out.println("CPU pulling last card...");
+					gameContinue = false;
+				}else if(gameMenu == 3) {
+					if(Integer.parseInt(playerTable[8].getNumber()) != 0) {
+						System.out.println("You cannot add a special card.");
+						break;
+					}
+					while(true) {
+						System.out.println("Kaçıncı sıradaki kartınızı oynamak istersiniz? (1,2,3,4)");
+						System.out.print("Sayıyı girin: ");
+						chooseSpecial = sc.nextInt();
+						if(chooseSpecial != 1 && chooseSpecial != 2 && chooseSpecial != 3 && chooseSpecial != 4) {
+							continue;
+						}else {
+							break;
+						}
+					}
+					Cards.addCardTable(playerHand,playerTable,gameRoundPlayer,chooseSpecial-1);
+					gameRoundPlayer+=1;
+					Cards.updateHand(playerHand,chooseSpecial-1);
+					gameContinue = false;
+				}else {
+					System.out.println("You enter wrong number. Try again.");
+					continue;
+				}
+				printSpace(30);
+				printGame(computerHand,computerTable,playerTable,playerHand);
+				gameRoundPlayer += 1;
+				gameRoundCPU += 1;
+			}
+			
+			int pointCPU = Cards.getTablePoint(computerTable);
+			int pointPlayer = Cards.getTablePoint(playerTable);
+			totalRounds++;
+			System.out.println("---------------------------------------------------------------------------------------------------------");
+			System.out.println("CPU points: " + Cards.getTablePoint(computerTable));
+			System.out.println("Player points: " + Cards.getTablePoint(playerTable));
+			if(pointPlayer > 20 && pointCPU > 20) {				
+				System.out.println("Draw");
+			}else if(pointPlayer > 20 && pointCPU < 20) {
+				System.out.println("CPU won");
+				totalPointsCPU++;
+			}else if(pointPlayer < 20 && pointCPU > 20) {
+				System.out.println("Player won");
+				totalPointsPlayer++;
+			}else if(pointPlayer < 20 && pointCPU < 20) {
+				if(pointPlayer > pointCPU) {
+					System.out.println("Player won");
+					totalPointsPlayer++;
+				}else {
+					System.out.println("CPU won");
+					totalPointsCPU++;
+				}
+			}else if(pointPlayer == 20) {
+				System.out.println("Player won");
+				totalPointsPlayer++;
+			}else if(pointCPU == 20) {
+				System.out.println("CPU won");
+				totalPointsCPU++;
+			}
+			System.out.println("---------------------------------------------------------------------------------------------------------");
+			System.out.println("CPU total points: " + totalPointsCPU);
+			System.out.println("Player total points: " + totalPointsPlayer);
+			System.out.println("Total round played: " + totalRounds);
+			System.out.println("---------------------------------------------------------------------------------------------------------");
+			int con = -1;
+			if(totalPointsPlayer == 3) {
+				System.out.println("GAME WINNER PLAYER");
+				whoWon = "Player";
+				break;
+			}else if(totalPointsCPU == 3) {
+				System.out.println("GAME WINNER CPU");
+				whoWon = "CPU";
+				break;
+			}else {
+				while(true) {
+					System.out.print("Press 1 to continue: ");
+					con = sc.nextInt();
+					if(con == 1) {
+						break;
+					}	
+				}
+				
+			}
+			printSpace(30);
+		}
+		Games.writeFile(playerName,whoWon,totalPointsPlayer,totalPointsCPU,totalRounds);
 	}
 }
