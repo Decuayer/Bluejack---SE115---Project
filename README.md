@@ -1,7 +1,7 @@
 SE 115 Project Description
 
 
-Introduction
+Introduction:
 Bluejack is a card game played by two people. It is similar to Blackjack, but with different
 types of cards, which will be described shortly. Please read this description carefully, it is
 written to answer all of your questions.
@@ -9,7 +9,7 @@ The implementation of your Bluejack game will be played by two players: the comp
 versus the human player.
 
 
-The Game
+The Game:
 Bluejack is played by three decks of cards. The game deck is made up of four sets of cards
 that range between 1 and 10. The sets are colored blue, yellow, red, and green. The other two
 decks are called player decks which will have 10 cards each. They are formed as follows:
