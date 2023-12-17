@@ -21,7 +21,7 @@ decks are called player decks which will have 10 cards each. They are formed as 
 After this first step, both player decks have 5 cards. The remaining five cards are randomly
 generated as follows:
   ● Three cards with random colors and values between 1 to 6, with an additional sign,
-that is either a plus (+) or a minus (-). These cards are either positive or negative,
+that is either a plus (+) or a minus (-). These cards are either positive or negative,  
 depending on the random sign.
   ● The remaining two cards have an 80 percent chance of being a signed card. However,
 if the user is lucky (20 percent!), then:
