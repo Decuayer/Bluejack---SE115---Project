@@ -216,7 +216,6 @@ public class main {
 					gameContinue = false;
 				}else if(gameMenu == 3) {
 					if(Integer.parseInt(playerTable[8].getNumber()) != 0) {
-						System.out.println("You cannot add a special card.");
 						break;
 					}
 					while(true) {
@@ -226,7 +225,18 @@ public class main {
 						if(chooseSpecial != 1 && chooseSpecial != 2 && chooseSpecial != 3 && chooseSpecial != 4) {
 							continue;
 						}else {
-							break;
+							int specailCardGet;
+							if(playerHand[chooseSpecial-1].getNumber() == "2x" || playerHand[chooseSpecial-1].getNumber() == "+/-") {
+								specailCardGet = 1;
+							}else {
+								specailCardGet = Integer.parseInt(playerHand[chooseSpecial-1].getNumber());
+							}
+							if(specailCardGet == 0) {
+								System.out.println("The row you selected is empty. Try again.");
+								continue;
+							}else {
+								break;
+							}
 						}
 					}
 					Cards.addCardTable(playerHand,playerTable,gameRoundPlayer,chooseSpecial-1);
@@ -239,9 +249,88 @@ public class main {
 				}
 				printSpace(30);
 				printGame(computerHand,computerTable,playerTable,playerHand);
+				int cpuReturn = Bot.botReturn(Cards.getTablePoint(playerTable), Cards.getTablePoint(computerTable), computerHand, computerTable);
+				if(cpuReturn == 5) {
+					totalPointsCPU = 3;
+					gameContinue = false;
+				}else if(cpuReturn == 1 || cpuReturn == 2 || cpuReturn == 3 || cpuReturn == 4) {
+					gameRoundCPU++;
+					Cards.addCardTable(computerHand,computerTable,gameRoundCPU,cpuReturn-1);
+					Cards.updateHand(computerHand,cpuReturn-1);
+					if(Integer.parseInt(playerTable[8].getNumber()) != 0) {
+						break;
+					}
+					while(true) {
+						System.out.println("Last turn. What rank card do you want to play? If you don't want to use special card enter 0. (0,1,2,3,4)");
+						System.out.print("Enter the number: ");
+						chooseSpecial = sc.nextInt();
+						if(chooseSpecial == 0) {
+							break;
+						}else if(chooseSpecial != 1 && chooseSpecial != 2 && chooseSpecial != 3 && chooseSpecial != 4) {
+							continue;
+						}else {
+							int specailCardGet;
+							if(playerHand[chooseSpecial-1].getNumber() == "2x" || playerHand[chooseSpecial-1].getNumber() == "+/-") {
+								specailCardGet = 1;
+							}else {
+								specailCardGet = Integer.parseInt(playerHand[chooseSpecial-1].getNumber());
+							}
+							if(specailCardGet == 0) {
+								System.out.println("The row you selected is empty. Try again.");
+								continue;
+							}else {
+								break;
+							}
+						}
+					}
+					if(chooseSpecial != 0) {
+						gameRoundPlayer+=1;
+						Cards.addCardTable(playerHand,playerTable,gameRoundPlayer,chooseSpecial-1);
+						Cards.updateHand(playerHand,chooseSpecial-1);
+					}
+					gameContinue = false;
+				}else if(cpuReturn == 0) {
+					if(Integer.parseInt(playerTable[8].getNumber()) != 0) {
+						break;
+					}
+					while(true) {
+						System.out.println("Last turn. What rank card do you want to play? If you don't want to use special card enter 0. (0,1,2,3,4)");
+						System.out.print("Enter the number: ");
+						chooseSpecial = sc.nextInt();
+						if(chooseSpecial == 0) {
+							break;
+						}else if(chooseSpecial != 1 && chooseSpecial != 2 && chooseSpecial != 3 && chooseSpecial != 4) {
+							continue;
+						}else {
+							int specailCardGet;
+							if(playerHand[chooseSpecial-1].getNumber() == "2x" || playerHand[chooseSpecial-1].getNumber() == "+/-") {
+								specailCardGet = 1;
+							}else {
+								specailCardGet = Integer.parseInt(playerHand[chooseSpecial-1].getNumber());
+							}
+							if(specailCardGet == 0) {
+								System.out.println("The row you selected is empty. Try again.");
+								continue;
+							}else {
+								break;
+							}
+						}
+					}
+					if(chooseSpecial != 0) {
+						gameRoundPlayer+=1;
+						Cards.addCardTable(playerHand,playerTable,gameRoundPlayer,chooseSpecial-1);
+						Cards.updateHand(playerHand,chooseSpecial-1);
+					}
+					gameContinue = false;
+				}else if(cpuReturn == 6) {
+					System.out.println("CPU Continue...");
+				}
+				printSpace(30);
+				printGame(computerHand,computerTable,playerTable,playerHand);
 				gameRoundPlayer += 1;
 				gameRoundCPU += 1;
 			}
+			
 			
 			int pointCPU = Cards.getTablePoint(computerTable);
 			int pointPlayer = Cards.getTablePoint(playerTable);
@@ -261,16 +350,30 @@ public class main {
 				if(pointPlayer > pointCPU) {
 					System.out.println("Player won");
 					totalPointsPlayer++;
+				}else if(pointPlayer < pointCPU) {
+					System.out.println("CPU won");
+					totalPointsCPU++;
+				}else {
+					System.out.println("Draw");
+				}
+			}else if(pointPlayer == 20 && pointCPU == 20) {
+				System.out.println("Draw");
+			}else if(pointPlayer == 20) {
+				if(Cards.getTableColour(playerTable)){
+					System.out.println("All cards are blue. Player win total game.");
+					totalPointsPlayer = 3;
+				} else {
+					System.out.println("Player won");
+					totalPointsPlayer++;
+				}
+			}else if(pointCPU == 20) {
+				if(Cards.getTableColour(computerTable)) {
+					System.out.println("All cards are blue. Computer win total game.");
+					totalPointsCPU = 3;
 				}else {
 					System.out.println("CPU won");
 					totalPointsCPU++;
 				}
-			}else if(pointPlayer == 20) {
-				System.out.println("Player won");
-				totalPointsPlayer++;
-			}else if(pointCPU == 20) {
-				System.out.println("CPU won");
-				totalPointsCPU++;
 			}
 			System.out.println("---------------------------------------------------------------------------------------------------------");
 			System.out.println("CPU total points: " + totalPointsCPU);
@@ -278,7 +381,11 @@ public class main {
 			System.out.println("Total round played: " + totalRounds);
 			System.out.println("---------------------------------------------------------------------------------------------------------");
 			int con = -1;
-			if(totalPointsPlayer == 3) {
+			if(totalPointsPlayer == 3 && totalPointsCPU == 3) {
+				System.out.println("DRAW");
+				whoWon = "Draw";
+				break;
+			}else if(totalPointsPlayer == 3) {
 				System.out.println("GAME WINNER PLAYER");
 				whoWon = "Player";
 				break;

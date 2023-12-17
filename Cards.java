@@ -155,4 +155,29 @@ public class Cards{
 		}
 		return sum;
 	}
+	public boolean getTableColour(Cards[] Table) {
+		int c = 0;
+		for(int i = 0; i < Table.length; i++) {
+			if(!Table[i].getColour().equals("0")) {
+				c++;
+			}
+		}
+		if(c == 0) {
+			return false;
+		}
+		String[] arr = new String[c];
+		int counter = 0;
+		for(int i = 0; i < arr.length; i++) {
+			arr[i] = Table[i].getColour();
+		}
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i].equals("Blue")) {
+				counter++;
+			}
+		}
+		if(counter == c) {
+			return true;
+		}
+		return false;
+	}
 }
