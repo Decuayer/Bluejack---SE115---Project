@@ -1,9 +1,9 @@
 public class Bot {
 	public int botReturn(int player, int cpu, Cards[] cpuHand,Cards[] cpuTable){
-		// 0 -> Stop
-		// 1,2,3,4 -> HandDeck
+		// 0 -> Stand
+		// 1,2,3,4 -> Special Cards
 		// 5 -> All Blue
-		// 6 -> Continue
+		// 6 -> Draw Card
 		int[] arrNumber = new int[cpuHand.length];
 		String[] arrColour = new String[cpuHand.length];
 		int cpuToGame = 20 - cpu;
@@ -16,7 +16,13 @@ public class Bot {
 		}
 		int[] arrTableNumber = new int[colourCounter];
 		for(int i = 0; i < arrTableNumber.length; i++) {
-			arrTableNumber[i] = Integer.parseInt(cpuTable[i].getNumber());
+			if(cpuTable[i].getNumber().equals("2x")) {
+				arrTableNumber[i] = 0;
+			}else if(cpuTable[i].getNumber().equals("+/-")) {
+				arrTableNumber[i] = 0;
+			}else {
+				arrTableNumber[i] = Integer.parseInt(cpuTable[i].getNumber());
+			}
 		}
 		for(int i = 0; i < cpuHand.length ; i++) {
 			if(arrTableNumber.length == 0) {
@@ -49,6 +55,9 @@ public class Bot {
 		}
 		for(int i = 0; i < arrNumber.length; i++) {
 			if(cpuToGame == arrNumber[i]) {
+				if(cpuToGame == 0) {
+					break;
+				}
 				return i+1;
 			}
 		}
@@ -67,7 +76,7 @@ public class Bot {
 						return i+1;
 					}
 				}
-				return 6;
+				return 0;
 			}
 		} else if(cpu > 20) {
 			for(int i = 0; i < arrNumber.length; i++) {
