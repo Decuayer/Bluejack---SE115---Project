@@ -147,12 +147,14 @@ public class main {
 				printSpace(30);
 				break;
 			}else if(mainMenu.equals("2")) {
+				printSpace(30);
 				System.out.println("---------------------------------------------------------------------------------------------------------");
 				Games.readFile();
 				while(true) {
 					System.out.print("Press 1 to return: ");
 					optionsMenu = sc.nextLine();
 					if(optionsMenu.equals("1")) {
+						printSpace(30);
 						break;
 					}
 				}
@@ -354,6 +356,7 @@ public class main {
 							}
 							System.out.println("CPU draws card.");
 							Cards.addCardTable(newDeck,computerTable,gameRoundCPU,cardPosition);
+							System.out.println(cardPosition);
 							cardPosition++;
 							gameRoundCPU += 1;
 							computerTurn = false;
