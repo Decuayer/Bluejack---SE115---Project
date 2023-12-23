@@ -9,6 +9,7 @@ public class Cards{
 		number = x;
 	}
 	
+	//..........................GET-SET METHODS................................................
 	public void setNumber(String x) {
 		number = x;
 	}
@@ -22,8 +23,7 @@ public class Cards{
 		return colour;
 	}
 	
-	
-	
+	//..........................SHUFFLE DECK METHOD................................................
 	public void shuffle(Cards[] deck) {
 		Random r = new Random(System.currentTimeMillis());
 		for(int i = 0; i < deck.length; i++) {
@@ -34,6 +34,7 @@ public class Cards{
 			deck[randomindex] = temp;
 		}
 	}
+	//..........................DEAL CARD TO PLAYER AND COMPUTER DECK................................................
 	public void deal(Cards[] deck, Cards[] computerDeck, Cards[] playerDeck, Cards[] newDeck) {
 		int decklength = deck.length-1;
 		int counter = 0;
@@ -49,6 +50,7 @@ public class Cards{
 			counter++;
 		}
 	}
+	//..........................DEAL SIGNED CARD TO PLAYER AND COMPUTER DECK................................................
 	public void dealSigned(Cards[] sdcoloured, Cards[] signeddeck, Cards[] computerDeck, Cards[] playerDeck) {
 		Random r = new Random(System.currentTimeMillis());
 		int x;
@@ -90,6 +92,7 @@ public class Cards{
 		}
 		
 	}
+	//..........................DEAL RANDOM CARD FROM DECKS TO HAND................................................
 	public void dealHand(Cards[] computerDeck, Cards[] computerHand, Cards[] playerDeck, Cards[] playerHand) {
 		Random r = new Random(System.currentTimeMillis());
 		int x = -1;
@@ -136,12 +139,15 @@ public class Cards{
 			c++;
 		}
 	}
+	//..........................ADD CARD TO TABLE FROM NEWDECK................................................
 	public void addCardTable(Cards[] newDeck, Cards[] Table,int position, int cardPosition) {
 		Table[position] = newDeck[cardPosition];
 	}
+	//..........................UPDATE HAND TO EMPTY................................................
 	public void updateHand(Cards[] Hand, int position) {
 		Hand[position] = new Cards("0","0");
 	}
+	//..........................GET TABLE POINTS................................................
 	public int getTablePoint(Cards[] Table) {
 		int sum = 0;
 		for(int i = 0; i < Table.length; i++) {
@@ -155,6 +161,7 @@ public class Cards{
 		}
 		return sum;
 	}
+	//..........................CHECK IF ALL CARDS COLORS ARE BLUE................................................
 	public boolean getTableColour(Cards[] Table) {
 		int c = 0;
 		for(int i = 0; i < Table.length; i++) {

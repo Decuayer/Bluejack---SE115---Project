@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.io.File;
 import java.io.FileWriter;
 public class Games {
+	//..........................PRINT LATEST GAMES................................................
 	public void readFile() {
 		Scanner reader = null;
 		String[] fields = {"Id: ", "Player Name: ", "Won: ", "Player Points: ", "CPU points: ", "Number of Rounds Played: ", "Date: ", "Time: "};
@@ -28,6 +29,7 @@ public class Games {
 			}
 		}
 	}
+	//..........................WRITE LAST 10 GAMES................................................
 	public void fileDeleteRename() {
 		Scanner reader = null;
 		Formatter f = null;
@@ -81,6 +83,7 @@ public class Games {
 			System.out.println("!");
 		}
 	}
+	//..........................GET FILE MAXIMUM ID................................................
 	public int readId() {
 		Scanner reader = null;
 		int sum = -1;
@@ -123,6 +126,7 @@ public class Games {
 		}
 		return sum;
 	}
+	//..........................SAVE PLAYED GAME TO FILE................................................
 	public void writeFile(String name, String won, int pPoints, int cPoints, int rounds) {
 		LocalDate date = LocalDate.now();
 		LocalTime time = LocalTime.now();

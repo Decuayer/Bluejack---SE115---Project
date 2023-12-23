@@ -465,7 +465,7 @@ public class main {
 				System.out.println("Total round played: " + totalRounds);
 				System.out.println("---------------------------------------------------------------------------------------------------------");
 				String con = "";
-				//..........................TOTAL GAME START................................................
+				//..........................TOTAL GAME POINT START................................................
 				if(totalPointsPlayer == 3 && totalPointsCPU == 3) {
 					System.out.println("DRAW");
 					whoWon = "Draw";
