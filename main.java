@@ -505,7 +505,6 @@ public class main {
 			if(svg.equals("1")) {
 				System.out.print("Game saving.");
 				Games.writeFile(playerName,whoWon,totalPointsPlayer,totalPointsCPU,totalRounds);
-				Games.fileDeleteRename();
 				break;
 			} else if (svg.equals("2")) {
 				System.out.println("Game not saved.");
